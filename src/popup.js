@@ -19,7 +19,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     }
 });
 
-
 document.getElementById("extract-transcript").addEventListener("click", async () => {
     const transcriptOutput = document.getElementById('transcript-output');
     
@@ -33,7 +32,7 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
             target: { tabId: tab.id },
             function: extractTranscript,
         }, (results) => {
-            const transcript = results[0].result;
+            transcript = results[0].result;  // Assign the extracted transcript to the global variable
 
             // Display the transcript and remove the spinner
             transcriptOutput.innerHTML = '';  // Clear the spinner
@@ -47,8 +46,6 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
         });
     });
 });
-
-
 
 document.getElementById('copy-transcript').addEventListener('click', async () => {
     if (transcript) {
