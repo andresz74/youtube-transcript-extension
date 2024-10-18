@@ -2,6 +2,7 @@
     --fs-12px: 0.75rem;
     --fs-14px: 0.875rem;
     --fs-16px: 1rem;
+    --primary: rgb(15, 23, 42);
 }
 
 /* Ensure the popup has a minimum size */
@@ -41,7 +42,7 @@ body {
 
 /* Button styles */
 .button {
-    background-color: #4CAF50;
+    background-color: var(--primary);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -54,12 +55,12 @@ body {
 }
 
 .button:disabled {
-    background-color: #ccc;
     cursor: not-allowed;
+    opacity: .5;
 }
 
 .button:hover:enabled {
-    background-color: #45a049;
+    opacity: .9;
 }
 
 /* Loading spinner */
@@ -83,6 +84,7 @@ body {
     font-size: var(--fs-14px);
     white-space: pre-wrap;
     box-sizing: border-box;
+    text-align: left;  /* Ensure text is left-aligned */
 }
 
 /* Scrollbar customization */
@@ -97,4 +99,33 @@ body {
 
 .transcript-box::-webkit-scrollbar-thumb:hover {
     background-color: #999;
+}
+
+/* Spinner container to center only the spinner */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Spinner styles */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--primary);
+    opacity: 0.5;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
