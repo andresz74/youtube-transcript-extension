@@ -21,6 +21,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
 
 document.getElementById("extract-transcript").addEventListener("click", async () => {
+    const transcriptOutput = document.getElementById('transcript-output');
+    
+    // Clear previous content and show the spinner in a container
+    transcriptOutput.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
+    
     chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
         const tab = tabs[0];
 
@@ -28,10 +33,12 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
             target: { tabId: tab.id },
             function: extractTranscript,
         }, (results) => {
-            transcript = results[0].result;
-            document.getElementById('transcript-output').innerText = transcript;
+            const transcript = results[0].result;
 
-            // Enable the Copy button if a valid transcript is present
+            // Display the transcript and remove the spinner
+            transcriptOutput.innerHTML = '';  // Clear the spinner
+            transcriptOutput.innerText = transcript;
+
             if (transcript && transcript !== 'Error fetching transcript') {
                 document.getElementById('copy-transcript').disabled = false;
             } else {
@@ -40,6 +47,8 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
         });
     });
 });
+
+
 
 document.getElementById('copy-transcript').addEventListener('click', async () => {
     if (transcript) {
