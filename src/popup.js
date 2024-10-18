@@ -3,6 +3,7 @@ document.getElementById('extract-transcript').disabled = true;
 document.getElementById('copy-transcript').disabled = true;
 
 let transcript = ''; // Global variable to store the transcript
+let videoTitle = ''; // Global variable to store the video title
 
 // Check if we're on a YouTube video page
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -32,11 +33,13 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
             target: { tabId: tab.id },
             function: extractTranscript,
         }, (results) => {
-            transcript = results[0].result;  // Assign the extracted transcript to the global variable
+            const resultData = results[0].result;
+            transcript = resultData.transcript;  // Assign the extracted transcript to the global variable
+            videoTitle = resultData.title;  // Assign the video title to the global variable
 
-            // Display the transcript and remove the spinner
+            // Display the video title and transcript, remove the spinner
             transcriptOutput.innerHTML = '';  // Clear the spinner
-            transcriptOutput.innerText = transcript;
+            transcriptOutput.innerHTML = `<strong>${videoTitle}</strong><br><br>${transcript}`;  // Insert title and transcript
 
             if (transcript && transcript !== 'Error fetching transcript') {
                 document.getElementById('copy-transcript').disabled = false;
@@ -49,7 +52,8 @@ document.getElementById("extract-transcript").addEventListener("click", async ()
 
 document.getElementById('copy-transcript').addEventListener('click', async () => {
     if (transcript) {
-        await navigator.clipboard.writeText(transcript);
+        const fullTranscript = `${videoTitle}\n\n${transcript}`;
+        await navigator.clipboard.writeText(fullTranscript);
         const copyButton = document.getElementById('copy-transcript');
         copyButton.innerText = 'Copied!';
 
@@ -60,7 +64,7 @@ document.getElementById('copy-transcript').addEventListener('click', async () =>
     }
 });
 
-// Function to extract transcript from YouTube video (runs in YouTube tab context)
+// Function to extract transcript and title from YouTube video (runs in YouTube tab context)
 async function extractTranscript() {
     const videoUrl = window.location.href;
     const apiBaseUrl = 'https://192.168.1.181/transcript-api';
@@ -78,8 +82,8 @@ async function extractTranscript() {
         }
 
         const data = await response.json();
-        return data.transcript;
+        return { title: data.title, transcript: data.transcript };
     } catch (error) {
-        return 'Error fetching transcript';
+        return { title: '', transcript: 'Error fetching transcript' };
     }
 }
