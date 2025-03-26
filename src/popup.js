@@ -67,7 +67,7 @@ document.getElementById('copy-transcript').addEventListener('click', async () =>
 // Function to extract transcript and title from YouTube video (runs in YouTube tab context)
 async function extractTranscript() {
     const videoUrl = window.location.href;
-    const apiBaseUrl = 'https://192.168.1.181/transcript-api';
+    const apiBaseUrl = 'https://transcript.andreszenteno.com';
     const payload = { url: videoUrl };
 
     try {
