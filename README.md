@@ -40,8 +40,15 @@ To install the extension locally for development purposes:
 
 1. Navigate to any YouTube video page.
 2. Click the YouTube Transcript Extractor icon in your Chrome toolbar.
-3. The transcript for the video will be fetched and displayed in the popup.
-4. Click the **Copy Transcript** button to copy the transcript to your clipboard.
+3. The video title and transcript will be fetched and displayed in the popup.
+4. Click the **Copy Transcript** button to copy the full transcript (including the title) to your clipboard.
+
+> ⚠️ This extension depends on a running transcript API service.  
+> By default, it is configured to use:  
+> `https://transcript.andreszenteno.com/simple-transcript`
+
+If you're running the API locally, make sure to update the base URL in `popup.js`.
+
 
 ## Development
 
