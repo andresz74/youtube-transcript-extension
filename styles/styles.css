@@ -25,7 +25,7 @@ body {
 .container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;  /* Two auto-sized rows for buttons, and the rest goes to the transcript */
+    grid-template-rows: auto 1fr auto;  /* Two auto-sized rows for buttons, and the rest goes to the transcript */
     gap: 10px;
     padding: 20px;
     height: 100%;
@@ -136,11 +136,31 @@ body {
     }
 }
 
-.toggle-wrapper {
+.action-bar {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .icon-button:hover:enabled {
+    background-color: #e0e0e0;
+  }
+  
+  .icon-button:disabled {
+    color: #aaa;
+    cursor: not-allowed;
   }
   
   .toggle-button {
@@ -163,6 +183,5 @@ body {
     background-color: #ddd;
     color: #888;
     cursor: not-allowed;
-    border-color: #ddd;
   }
   
