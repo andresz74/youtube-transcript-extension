@@ -1,91 +1,123 @@
 # YouTube Transcript Extension
 
-YouTube Transcript Extension is a Chrome extension that allows users to easily extract the transcript of any YouTube video. The extension is designed to fetch and display the transcript within a popup, and users can also copy the transcript to their clipboard.
+YouTube Transcript Extension is a Chrome extension that allows users to easily extract, **summarize**, copy, and download the transcript of any YouTube video. The extension fetches the data through a backend API and provides a clean, minimal UI for interacting with both the full transcript and the summary.
 
-## Features
+---
 
-- Automatically fetches YouTube video transcripts.
-- Displays the transcript in a clean, scrollable interface.
-- Allows users to copy the transcript to the clipboard.
-- Works on any YouTube video page.
+## ✨ Features
 
-## Important: Required Backend Service
+- ✅ Automatically fetches YouTube video transcripts.
+- ✅ AI-generated summaries powered by OpenAI (via your backend service).
+- ✅ Toggle between **Transcript** and **Summary**.
+- ✅ Copy the current content (Transcript or Summary) to the clipboard.
+- ✅ Download the content as a `.txt` file (with video ID in filename).
+- ✅ Refresh functionality to re-fetch both the transcript and the summary.
+- ✅ Clean, scrollable interface.
+- ✅ Works on any YouTube video page.
 
-To work correctly, this extension requires a local or remote backend service to fetch transcripts from YouTube videos. Before using the extension, you **must first clone and run** the following API service:
+---
 
-➡️ **[youtube-transcript-generator](https://github.com/andresz74/youtube-transcript-generator)**
+## 🚀 Important: Required Backend Services
 
-This service handles communication with YouTube, extracts the transcript and video title, and provides the data to the extension via a REST API.
+This extension depends on **two backend services** to work:
 
-Make sure the service is running and accessible at the correct URL (as configured in `popup.js`) before attempting to extract transcripts.
+### 1. Transcript Service
+Cloned from:  
+➡️ [youtube-transcript-generator](https://github.com/andresz74/youtube-transcript-generator)
 
-## Installation
+- Fetches the transcript and title of a YouTube video.
+- You can run this service locally or host it (like `https://transcript.andreszenteno.com`).
+- Default endpoint in use:  
+  `https://transcript.andreszenteno.com/simple-transcript`
 
-To install the extension locally for development purposes:
+### 2. AI Chat Service (for Summarization)
+
+Powered by OpenAI, this second backend accepts a chat format and returns summaries.  
+➡️ Example: [chat-gpt-access](https://github.com/andresz74/ChatGptAccess)  
+Used endpoint:  
+`https://chat-gpt-access.vercel.app/api/openai-chat`
+
+Make sure **both services are deployed or running locally** and that the URLs are correctly set inside `popup.js`.
+
+---
+
+## 🛠 Installation
+
+To install the extension locally for development:
 
 1. Clone this repository to your local machine:
     ```bash
     git clone https://github.com/andresz74/youtube-transcript-extension.git
     ```
 
-2. Open Chrome and navigate to `chrome://extensions/`.
+2. Open Chrome and go to:  
+   `chrome://extensions/`
 
-3. Enable **Developer Mode** by toggling the switch in the top right corner.
+3. Enable **Developer Mode** in the top right corner.
 
-4. Click the **Load unpacked** button and select the cloned repository folder.
+4. Click **Load unpacked** and select the cloned folder.
 
-5. The extension will now appear in your Chrome toolbar.
+5. The extension icon should now appear in your Chrome toolbar.
 
-## Usage
+---
 
-1. Navigate to any YouTube video page.
-2. Click the YouTube Transcript Extractor icon in your Chrome toolbar.
-3. The video title and transcript will be fetched and displayed in the popup.
-4. Click the **Copy Transcript** button to copy the full transcript (including the title) to your clipboard.
+## 💡 Usage
 
-> ⚠️ This extension depends on a running transcript API service.  
-> By default, it is configured to use:  
-> `https://transcript.andreszenteno.com/simple-transcript`
+1. Open any YouTube video.
+2. Click the **YouTube Transcript Extractor** icon.
+3. The transcript will automatically load.
+4. Use the toggle buttons:
+   - 📜 **Transcript** to view the full text
+   - 🧠 **Summary** to generate and view an AI summary
+5. Click:
+   - 📋 **Copy** to copy the current content
+   - 💾 **Download** to save the content as `.txt`
+   - 🔁 **Refresh** to reset and re-fetch data
 
-If you're running the API locally, make sure to update the base URL in `popup.js`.
+> ⚠️ Make sure the backend services are running and accessible, or the extension won't be able to fetch the data.
 
+---
 
-## Development
+## 🧰 Development
 
 ### Prerequisites
 
-- Ensure you have [Git](https://git-scm.com/) installed for version control.
-- [Node.js](https://nodejs.org/) and npm (if using Node.js for any project dependencies).
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (if modifying any backend or frontend JS behavior)
 
-### Project Structure
+### Folder Structure
 
 ```
 📁 extension-root
-├── 📁 icons             # Icon files for different sizes (16x16, 48x48, 128x128)
-├── 📁 src               # Source files
-│   ├── background.js    # Handles extension logic and background scripts
-│   ├── popup.js         # Handles UI interactions and message passing
-│   ├── content.js       # Content script for interacting with the web page
-│   ├── popup.html       # Popup UI for displaying transcript and buttons
-├── 📁 styles            # Styles for the popup
-│   └── styles.css
-├── .gitignore           # Specifies files and directories to ignore in Git
-├── manifest.json        # Chrome extension manifest file
-└── README.md            # This file
+├── 📁 icons             # Extension icons
+├── 📁 src
+│   ├── popup.html       # Extension popup UI
+│   ├── popup.js         # UI logic and API communication
+│   ├── content.js       # (optional) Page scripts
+│   ├── background.js    # (optional) Background logic
+├── 📁 styles
+│   └── styles.css       # Custom UI styles
+├── manifest.json        # Chrome extension manifest
+└── README.md
 ```
 
-### Version Control
+---
 
-- Branch management with Git is encouraged.
-- Create a new branch for significant updates:
-    ```bash
-    git checkout -b feature/new-feature
-    ```
+## 🧪 Version Control & Branching
 
-## Contributing
+Create a feature branch before pushing major changes:
+```bash
+git checkout -b feature/my-update
+```
 
-Feel free to fork this repository and make changes. Pull requests are welcome!
+---
 
-## License
+## 🤝 Contributing
+
+Pull requests are welcome! If you spot a bug or want to suggest a new feature, feel free to open an issue or PR.
+
+---
+
+## 📄 License
 
 This project is licensed under the MIT License.
