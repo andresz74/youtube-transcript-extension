@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/styles.css" />
     <title>YouTube Transcript Extractor</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
+        <div class="button-row">
+            <button id="extract-transcript" class="button">Get Transcript</button>
+            <button id="summarize-transcript" class="button" disabled>Summarize</button>
+        </div>          
+        <div class="action-bar">
+            <button id="refresh-button" class="icon-button" title="Refresh transcript & summary">🔁</button>
+            <button class="toggle-button active" data-view="transcript" disabled>📜 Transcript</button>
+            <button class="toggle-button" data-view="summary" disabled>🧠 Summary</button>
+            <button id="copy-content" class="icon-button" title="Copy current content" disabled>📋</button>
+        </div>      
+        <div id="output-box" class="transcript-box"></div>
         <p id="message" class="message"></p>
-        <button id="extract-transcript" class="button">Get Transcript</button>
-        <div id="transcript-output" class="transcript-box"></div>
-        <button id="copy-transcript" class="button">Copy</button>
     </div>
     <script src="popup.js"></script>
-</body>
-
+  </body>
 </html>
