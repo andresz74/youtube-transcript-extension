@@ -44,6 +44,7 @@ toggleButtons.forEach(btn => {
                     updateOutput(`${videoTitle}\n\n${transcript}`, 'transcript');
                     document.querySelector('[data-view="summary"]').disabled = false;
                     document.getElementById('copy-content').disabled = false;
+                    document.getElementById('download-content').disabled = false;
                 } else {
                     outputBox.innerText = 'Failed to fetch transcript.';
                 }
@@ -79,6 +80,7 @@ toggleButtons.forEach(btn => {
                         updateOutput(summary, 'summary');
                         document.getElementById('refresh-button').disabled = false;
                         document.getElementById('copy-content').disabled = false;
+                        document.getElementById('download-content').disabled = false;
                     } else {
                         outputBox.innerText = 'No summary returned.';
                     }
@@ -105,6 +107,30 @@ document.getElementById('copy-content').addEventListener('click', async () => {
     }
 });
 
+// Download content
+document.getElementById('download-content').addEventListener('click', async () => {
+    if (!currentContent) return;
+  
+    const isTranscript = document.querySelector('[data-view="transcript"]').classList.contains('active');
+    const type = isTranscript ? 'transcript' : 'summary';
+  
+    // Grab current video ID from the tab
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const videoId = new URL(tabs[0].url).searchParams.get('v') || 'video';
+  
+    const filename = `YouTube-${videoId}_${type}.txt`;
+  
+    const blob = new Blob([currentContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+  
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+  
+    URL.revokeObjectURL(url);
+});
+
 // Refresh button
 document.getElementById('refresh-button').addEventListener('click', () => {
     transcript = '';
@@ -115,6 +141,7 @@ document.getElementById('refresh-button').addEventListener('click', () => {
 
     document.getElementById('output-box').innerHTML = '';
     document.getElementById('copy-content').disabled = true;
+    document.getElementById('download-content').disabled = true;
 
     // Reset toggle states
     toggleButtons.forEach(b => {
