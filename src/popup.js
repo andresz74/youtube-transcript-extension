@@ -27,26 +27,41 @@ toggleButtons.forEach(btn => {
         const view = btn.getAttribute('data-view');
         const outputBox = document.getElementById('output-box');
 
-        // Visual spinner while fetching
         outputBox.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
         toggleButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
+        // Get the active tab’s URL
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const videoUrl = tab.url;
+
         if (view === 'transcript') {
             if (!transcript && !isFetching) {
                 isFetching = true;
-                const result = await extractTranscript();
-                transcript = result.transcript;
-                videoTitle = result.title;
-                isFetching = false;
 
-                if (transcript && transcript !== 'Error fetching transcript') {
-                    updateOutput(`${videoTitle}\n\n${transcript}`, 'transcript');
-                    document.querySelector('[data-view="summary"]').disabled = false;
-                    document.getElementById('copy-content').disabled = false;
-                    document.getElementById('download-content').disabled = false;
-                } else {
+                try {
+                    const response = await fetch('https://transcript.andreszenteno.com/smart-transcript', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: videoUrl }),
+                    });
+
+                    const data = await response.json();
+                    transcript = data.transcript;
+                    videoTitle = data.title;
+                    isFetching = false;
+
+                    if (transcript) {
+                        updateOutput(`${videoTitle}\n\n${transcript}`, 'transcript');
+                        document.querySelector('[data-view="summary"]').disabled = false;
+                        document.getElementById('copy-content').disabled = false;
+                        document.getElementById('download-content').disabled = false;
+                    } else {
+                        outputBox.innerText = 'Transcript not found.';
+                    }
+                } catch (err) {
                     outputBox.innerText = 'Failed to fetch transcript.';
+                    console.error(err);
                 }
             } else {
                 updateOutput(`${videoTitle}\n\n${transcript}`, 'transcript');
@@ -60,21 +75,15 @@ toggleButtons.forEach(btn => {
             }
 
             if (!summary) {
-                const chatGptMessages = [
-                    { role: 'system', content: 'You are a helpful assistant.' },
-                    { role: 'user', content: `Please summarize this YouTube transcript:\n\n${transcript}` }
-                ];
-
                 try {
-                    const response = await fetch('https://chat-gpt-access.vercel.app/api/openai-chat', {
+                    const response = await fetch('https://transcript.andreszenteno.com/smart-summary', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chatGptMessages }),
+                        body: JSON.stringify({ url: videoUrl, transcript }),
                     });
 
-                    if (!response.ok) throw new Error('Error summarizing transcript');
                     const data = await response.json();
-                    summary = data.choices?.[0]?.message?.content;
+                    summary = data.summary;
 
                     if (summary) {
                         updateOutput(summary, 'summary');
@@ -86,8 +95,6 @@ toggleButtons.forEach(btn => {
                     }
                 } catch (err) {
                     outputBox.innerText = 'Failed to summarize transcript.';
-                    document.querySelector('[data-view="transcript"]').disabled = false;
-                    document.querySelector('[data-view="summary"]').disabled = true;
                     console.error(err);
                 }
             } else {
@@ -181,7 +188,7 @@ async function extractTranscript() {
                     const apiBaseUrl = 'https://transcript.andreszenteno.com';
                     const payload = { url: videoUrl };
 
-                    return fetch(`${apiBaseUrl}/simple-transcript`, {
+                    return fetch(`${apiBaseUrl}/smart-transcript`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload),
