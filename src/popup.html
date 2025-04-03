@@ -10,10 +10,15 @@
 
 <body>
     <div class="container">
-        <p id="message" class="message"></p>
-        <button id="extract-transcript" class="button">Get Transcript</button>
+        <div class="transcript-header">
+            <div class="header-title">YouTube Transcript Extractor</div>
+            <div class="button-container">
+                <button id="extract-transcript" class="button">Get Transcript</button>
+                <button id="copy-transcript" class="button">Copy</button>
+            </div>
+        </div>
         <div id="transcript-output" class="transcript-box"></div>
-        <button id="copy-transcript" class="button">Copy</button>
+        <p id="message" class="message"></p>
     </div>
     <script src="popup.js"></script>
 </body>
