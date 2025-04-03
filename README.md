@@ -2,7 +2,9 @@
 
 The **YouTube Transcript Extension** lets you extract and summarize the transcript of any YouTube video directly from your browser — with a clean interface, AI-powered summaries, and options to copy or download the content.
 
----
+![YouTube Transcript Extractor](https://objects-us-east-1.dream.io/az-assets/youtube-transcript-extension.png)
+
+## Features
 
 ## ✨ What's New
 
