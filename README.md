@@ -2,6 +2,8 @@
 
 YouTube Transcript Extension is a Chrome extension that allows users to easily extract the transcript of any YouTube video. The extension is designed to fetch and display the transcript within a popup, and users can also copy the transcript to their clipboard.
 
+![YouTube Transcript Extractor](https://objects-us-east-1.dream.io/az-assets/youtube-transcript-extension.png)
+
 ## Features
 
 - Automatically fetches YouTube video transcripts.
