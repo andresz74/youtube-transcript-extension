@@ -10,7 +10,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const tab = tabs[0];
 
     // Check if it's a YouTube video URL (contains 'watch?v=')
-    if (tab.url.includes('youtube.com/watch?v=')) {
+    if (tab.url.includes('youtube.com/watch?v=') || tab.url.includes('youtube.com/shorts') || tab.url.includes('youtu.be/')) {
         document.getElementById('extract-transcript').disabled = false;
         document.getElementById('message').style.display = 'none';  // Hide the message
     } else {
