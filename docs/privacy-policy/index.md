@@ -1,6 +1,6 @@
 # Privacy Policy for YouTube Transcript Extension
 
-**Effective Date**: [Insert Date]
+**Effective Date**: Apr 23, 2025
 
 This Privacy Policy describes how the YouTube Transcript Extension (“we,” “our,” or “the Extension”) collects, uses, and protects your information when you use the extension.
 
@@ -36,4 +36,4 @@ We may update this privacy policy from time to time. We will notify users of any
 
 ## Contact Information
 
-If you have any questions or concerns about this privacy policy, please contact us at [Insert Contact Information].
+If you have any questions or concerns about this privacy policy, please contact us at azenteno74@gmail.com.
