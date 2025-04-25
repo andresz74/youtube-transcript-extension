@@ -72,6 +72,7 @@ extractButton.addEventListener("click", async () => {
     const data = await fetchTranscript(videoUrl);
 
     if (data) {
+        copyButton.disabled = false;
         transcript = data.transcript;
         videoTitle = data.title;
         const languages = data.languages;
@@ -107,6 +108,7 @@ function displayTranscript(languages) {
 }
 
 // Handle language selection for transcripts
+// Handle language selection for transcripts
 function handleLanguageSelection(languages) {
     transcriptLanguages.innerHTML = '';  // Clear previous languages
     if (languages && languages.length > 0) {
@@ -127,6 +129,8 @@ function handleLanguageSelection(languages) {
                 transcriptOutput.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
                 const data = await fetchTranscript(videoUrl, selectedLanguage);
                 if (data) {
+                    // Update the global transcript variable and UI
+                    transcript = data.transcript;  // Update the transcript variable
                     transcriptOutput.innerHTML = `<strong>${videoTitle}</strong><br><br>${data.transcript}`;
                 }
             }
