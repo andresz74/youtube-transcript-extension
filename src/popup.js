@@ -84,7 +84,7 @@ extractButton.addEventListener("click", async () => {
 // Fetch transcript and languages from API
 async function fetchTranscript(url, lang = '') {
     try {
-        const response = await fetch(`${apiBaseUrl}/simple-transcript-test`, {
+        const response = await fetch(`${apiBaseUrl}/simple-transcript-v2`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url, lang })
