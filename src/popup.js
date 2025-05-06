@@ -68,7 +68,7 @@ function extractEmbeddedVideoUrl() {
 
 // Handle extract transcript click event
 extractButton.addEventListener("click", async () => {
-    transcriptOutput.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
+    transcriptOutput.innerHTML = '<div class="spinner-container"><div class="spinner"></div><div class="spinner-text">Fetching transcript... This may take a few seconds.</div></div>';
     const data = await fetchTranscript(videoUrl);
 
     if (data) {
@@ -76,7 +76,7 @@ extractButton.addEventListener("click", async () => {
         transcript = data.transcript;
         videoTitle = data.title;
         const languages = data.languages;
-        displayTranscript(languages);
+        displayTranscript(languages, data.transcriptLanguageCode);
     } else {
         transcriptOutput.innerHTML = 'Error fetching transcript';
     }
@@ -85,7 +85,7 @@ extractButton.addEventListener("click", async () => {
 // Fetch transcript and languages from API
 async function fetchTranscript(url, lang = '') {
     try {
-        const response = await fetch(`${apiBaseUrl}/simple-transcript-v2`, {
+        const response = await fetch(`${apiBaseUrl}/simple-transcript-v3`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url, lang })
@@ -102,22 +102,29 @@ async function fetchTranscript(url, lang = '') {
 }
 
 // Display transcript and language dropdown
-function displayTranscript(languages) {
+function displayTranscript(languages, currentLangCode = '') {
     transcriptOutput.innerHTML = `<strong>${videoTitle}</strong><br><br>${transcript}`;
-    handleLanguageSelection(languages);
+    handleLanguageSelection(languages, currentLangCode);
 }
 
+
 // Handle language selection for transcripts
-// Handle language selection for transcripts
-function handleLanguageSelection(languages) {
+function handleLanguageSelection(languages, currentLangCode = '') {
     transcriptLanguages.innerHTML = '';  // Clear previous languages
     if (languages && languages.length > 0) {
         const select = document.createElement('select');
         select.innerHTML = '<option value="">Available languages</option>';
+
         languages.forEach(lang => {
             const option = document.createElement('option');
             option.value = lang.code;
             option.textContent = lang.name;
+
+            // Select the option if it matches the current transcript language
+            if (lang.code === currentLangCode) {
+                option.selected = true;
+            }
+
             select.appendChild(option);
         });
 
@@ -129,9 +136,8 @@ function handleLanguageSelection(languages) {
                 transcriptOutput.innerHTML = '<div class="spinner-container"><div class="spinner"></div></div>';
                 const data = await fetchTranscript(videoUrl, selectedLanguage);
                 if (data) {
-                    // Update the global transcript variable and UI
                     transcript = data.transcript;  // Update the transcript variable
-                    transcriptOutput.innerHTML = `<strong>${videoTitle}</strong><br><br>${data.transcript}`;
+                    displayTranscript(data.languages, data.transcriptLanguageCode);  // Pass the current language code
                 }
             }
         });
