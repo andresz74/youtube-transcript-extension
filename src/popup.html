@@ -1,31 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/styles.css" />
+        <title>YouTube Transcript Extractor</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/styles.css">
-    <title>YouTube Transcript Extractor</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="transcript-header">
-            <div class="header-title">YouTube Transcript Extractor</div>
-            <div class="button-container">
-                <button id="extract-transcript" class="button">Get Transcript</button>
-                <button id="copy-transcript" class="button">Copy</button>
-            </div>
+    <body>
+        <div class="container">
+            <header class="top-bar">
+                <div class="title-group">
+                    <div class="header-title">YouTube Transcript</div>
+                    <div class="header-subtitle">Clip transcript into your notes</div>
+                </div>
+                <div class="button-container">
+                    <button id="extract-transcript" class="button button-primary">
+                        Get Transcript
+                    </button>
+                    <button id="copy-transcript" class="button button-secondary">Copy</button>
+                </div>
+            </header>
+            <section class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Properties</span>
+                    <span class="panel-meta">Transcript language</span>
+                </div>
+                <div class="property-row">
+                    <div class="property-label">Language</div>
+                    <div class="property-control" id="transcript-languages"></div>
+                </div>
+            </section>
+            <section class="panel transcript-panel">
+                <div class="panel-header">
+                    <span class="panel-title">Transcript</span>
+                    <span class="panel-meta">Preview</span>
+                </div>
+                <div id="transcript-output" class="transcript-box"></div>
+            </section>
+            <p id="message" class="message"></p>
         </div>
-        <div id="video-info" class="video-info">
-            <div class="languages-box">
-                <div id="transcript-languages"></div>
-            </div>
-        </div>
-        <div id="transcript-output" class="transcript-box"></div>
-        <p id="message" class="message"></p>
-    </div>
-    <script src="popup.js"></script>
-</body>
-
+        <script type="module" src="popup.js"></script>
+    </body>
 </html>
