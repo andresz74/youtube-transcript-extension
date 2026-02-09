@@ -1,0 +1,17 @@
+{
+    "name": "youtube-transcript-extension",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "test": "vitest run"
+    },
+    "devDependencies": {
+        "eslint": "^9.19.0",
+        "prettier": "^3.4.2",
+        "vitest": "^2.1.8"
+    }
+}
