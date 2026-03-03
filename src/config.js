@@ -11,3 +11,11 @@ export function getApiBaseUrl() {
 export function getTranscriptEndpoint() {
     return `${getApiBaseUrl()}/simple-transcript-v3`;
 }
+
+export function getTranscriptAsyncEndpoint() {
+    return `${getApiBaseUrl()}/simple-transcript-v3/async`;
+}
+
+export function getTranscriptStatusEndpoint(requestId) {
+    return `${getApiBaseUrl()}/transcript-status/${requestId}`;
+}
