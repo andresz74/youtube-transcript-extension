@@ -4,7 +4,7 @@ import {
     REQUEST_TIMEOUT_MS,
 } from './config.js';
 
-const POLL_INTERVAL_MS = 2000;
+const POLL_INTERVAL_MS = 4000;
 
 async function parseErrorResponse(response) {
     const contentType = response.headers.get('content-type') || '';
