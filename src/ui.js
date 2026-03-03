@@ -9,7 +9,7 @@ export function hideMessage(messageBox) {
 
 export function renderLoading(transcriptOutput, includeText = true) {
     const loadingText = includeText
-        ? '<div class="spinner-text">Fetching transcript... This may take a few seconds.</div>'
+        ? '<div class="spinner-text">Generating transcript... First-time fetches can take up to a minute.</div>'
         : '';
 
     transcriptOutput.innerHTML = `<div class="spinner-container"><div class="spinner"></div>${loadingText}</div>`;
