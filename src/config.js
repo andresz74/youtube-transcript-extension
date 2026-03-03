@@ -1,7 +1,7 @@
 const DEFAULT_API_BASE_URL = 'https://transcript.andreszenteno.com';
 const API_BASE_OVERRIDE_KEY = 'ytTranscriptApiBaseUrl';
 
-export const REQUEST_TIMEOUT_MS = 15000;
+export const REQUEST_TIMEOUT_MS = 60000;
 
 export function getApiBaseUrl() {
     const override = (localStorage.getItem(API_BASE_OVERRIDE_KEY) || '').trim();
