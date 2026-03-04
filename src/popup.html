@@ -8,37 +8,22 @@
     </head>
 
     <body>
-        <div class="container">
-            <header class="top-bar">
-                <div class="title-group">
-                    <div class="header-title">YouTube Transcript</div>
-                    <div class="header-subtitle">Clip transcript into your notes</div>
+        <div class="shell">
+            <header class="toolbar">
+                <div class="app-mark" aria-hidden="true">
+                    <span class="app-mark-glyph"></span>
                 </div>
                 <div class="button-container">
+                    <div class="property-control" id="transcript-languages"></div>
+                    <button id="copy-transcript" class="button button-secondary">Copy</button>
                     <button id="extract-transcript" class="button button-primary">
                         Get Transcript
                     </button>
-                    <button id="copy-transcript" class="button button-secondary">Copy</button>
                 </div>
             </header>
-            <section class="panel">
-                <div class="panel-header">
-                    <span class="panel-title">Properties</span>
-                    <span class="panel-meta">Transcript language</span>
-                </div>
-                <div class="property-row">
-                    <div class="property-label">Language</div>
-                    <div class="property-control" id="transcript-languages"></div>
-                </div>
-            </section>
-            <section class="panel transcript-panel">
-                <div class="panel-header">
-                    <span class="panel-title">Transcript</span>
-                    <span class="panel-meta">Preview</span>
-                </div>
-                <div id="transcript-output" class="transcript-box"></div>
-            </section>
+
             <p id="message" class="message"></p>
+            <div id="transcript-output" class="transcript-box"></div>
         </div>
         <script type="module" src="popup.js"></script>
     </body>
